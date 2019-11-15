@@ -47,10 +47,18 @@ export default class WeekView extends Component {
 
   generateTimes = () => {
     const times = [];
+    let hour;
     for (let i = 0; i < TIME_LABELS_COUNT; i += 1) {
       const minutes = i % 2 === 0 ? '00' : '30';
-      const hour = Math.floor(i / 2);
-      const time = `${hour}:${minutes}`;
+      // const hour = Math.floor(i / 2);
+      if(i <= 1) {
+        hour = 12
+      } else if(i > 24) {
+        hour = Math.floor((i - 24) / 2);
+      } else {
+        hour = Math.floor(i / 2);
+      }
+      const time = `${hour}:${minutes} ${i < 24 ? 'AM': 'PM'}`;
       times.push(time);
     }
     return times;
