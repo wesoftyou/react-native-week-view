@@ -42,7 +42,7 @@ const Column = ({
 }) => {
   return (
     <View style={styles.column}>
-      <Text style={[styles.text, getDayTextStyles(numberOfDays)]}>
+      <Text style={[styles.text, {textAlign: 'center'}, getDayTextStyles(numberOfDays)]}>
         {getFormattedDate(column, format)}
       </Text>
     </View>
@@ -70,7 +70,7 @@ const Title = ({ numberOfDays, selectedDate }) => { // eslint-disable-line react
   return (
     <View style={styles.title}>
       <Text
-        style={[styles.text, { fontSize: getFontSizeHeader(numberOfDays) }]}
+        style={[styles.text, { fontSize: getFontSizeHeader(numberOfDays), textAlign: 'center' }]}
       >
         {getCurrentMonth(selectedDate)}
       </Text>
@@ -98,7 +98,7 @@ WeekViewHeader.propTypes = {
 };
 
 WeekViewHeader.defaultProps = {
-  formatDate: 'MMM D',
+  formatDate: 'MMM D ddd',
 };
 
 export default WeekViewHeader;
