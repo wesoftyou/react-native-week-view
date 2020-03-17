@@ -22,12 +22,18 @@ export default class WeekView extends Component {
       currentMoment: props.selectedDate,
     };
     this.calendar = null;
+    this.scroll = null;
     setLocale(props.locale);
     this.times = this.generateTimes();
   }
 
   componentDidMount() {
+    const { initialScrollY } = this.props;
     requestAnimationFrame(() => {
+      // set default value (hours)
+      if (initialScrollY) {
+        this.scroll.scrollTo({ y: initialScrollY, x: 0, animated: false });
+      }
       this.calendar.scrollTo({ y: 0, x: 2 * (SCREEN_WIDTH - 60), animated: false });
     });
   }
@@ -90,6 +96,10 @@ export default class WeekView extends Component {
     this.calendar = ref;
   }
 
+  scrollViewRefVertical = (ref) => {
+    this.scroll = ref;
+  }
+
   prepareDates = (currentMoment, numberOfDays) => {
     const dates = [];
     for (let i = -2; i < 3; i += 1) {
@@ -119,7 +129,7 @@ export default class WeekView extends Component {
             numberOfDays={numberOfDays}
           />
         </View>
-        <ScrollView>
+        <ScrollView ref={this.scrollViewRefVertical}>
           <View style={styles.scrollViewContent}>
             <View style={styles.timeColumn}>
               {this.times.map(time => (
